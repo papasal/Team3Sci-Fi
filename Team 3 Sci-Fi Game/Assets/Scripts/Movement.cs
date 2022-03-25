@@ -8,10 +8,12 @@ public class Movement : MonoBehaviour
     public float speed = 12f;
     private Vector3 velocity;
     [SerializeField] private float gravity = -9.81f;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask;
     private bool isGrounded;
+    public bool jumpOn;
+    [SerializeField] private float jumpForce;
     
     void Update()
     {
@@ -20,6 +22,11 @@ public class Movement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+        }
+
+        if (isGrounded && Input.GetButtonDown("Jump") && jumpOn)
+        {
+            velocity.y += jumpForce;
         }
         
         float x = Input.GetAxis("Horizontal");
